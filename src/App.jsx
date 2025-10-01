@@ -26,9 +26,12 @@ export default function App() {
     setCooking(prev => [...prev, info])
   }
   const handleCooked = (info) => {
+    const sound = new Audio('/successed-295058.mp3')
+    sound.volume = 0.2
     let data = cooking.filter(e => e.id != info.id)
     setCooking(data)
     toast.success(`${info.order_title} is ready to serve`)
+    sound.play();
     info.time = new Date().toLocaleTimeString()
     setReady(prev => [...prev, info])
   }
