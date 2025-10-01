@@ -6,6 +6,7 @@ import { LuCookingPot, LuTicketCheck } from 'react-icons/lu'
 import { RiFileList3Line } from 'react-icons/ri'
 import CurrentOrder from './components/CurrentOrder'
 import { GiCook } from 'react-icons/gi'
+import { ToastContainer, toast } from 'react-toastify';
 
 const clientOrder = async () => {
   const res = await (await fetch("/orders.json")).json();
@@ -21,17 +22,20 @@ export default function App() {
   const handleOrder = (info) => {
     let data = order.filter(e => e.id != info.id)
     setOrder(data)
+    toast(`Cooking ${info.order_title}`)
     setCooking(prev => [...prev, info])
   }
   const handleCooked = (info) => {
     let data = cooking.filter(e => e.id != info.id)
     setCooking(data)
+    toast.success(`${info.order_title} is ready to serve`)
     info.time = new Date().toLocaleTimeString()
     setReady(prev => [...prev, info])
   }
 
   return (
     <main>
+      <ToastContainer theme='dark' />
       <Navbar />
       <div id='hero' className='flex items-start pt-10 justify-center h-[30vh] text-white w-full text-5xl font-semibold'>
         <GiCook />
