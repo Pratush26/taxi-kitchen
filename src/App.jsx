@@ -5,6 +5,7 @@ import { Suspense, useState } from 'react'
 import { LuCookingPot, LuTicketCheck } from 'react-icons/lu'
 import { RiFileList3Line } from 'react-icons/ri'
 import CurrentOrder from './components/CurrentOrder'
+import { GiCook } from 'react-icons/gi'
 
 const clientOrder = async () => {
   const res = await (await fetch("/orders.json")).json();
@@ -25,17 +26,18 @@ export default function App() {
   const handleCooked = (info) => {
     let data = cooking.filter(e => e.id != info.id)
     setCooking(data)
+    info.time = new Date().toLocaleTimeString()
     setReady(prev => [...prev, info])
   }
 
   return (
     <main>
       <Navbar />
-      <div id='hero' className='flex flex-col items-center justify-center h-[30vh] text-white w-full text-4xl font-semibold'>
-        <img src={CookImg} alt="cook" className='h-2/3 w-auto' />
+      <div id='hero' className='flex items-start pt-10 justify-center h-[30vh] text-white w-full text-5xl font-semibold'>
+        <GiCook />
         <p>Kitchen Room</p>
       </div>
-      <section className='container mx-auto grid grid-cols-3 place-content-center gap-4 m-6'>
+      <section className='w-11/12 mx-auto grid grid-cols-1 md:grid-cols-3 place-content-center gap-4 m-6'>
         <div className='border-amber-300 border-dotted border-2 rounded-lg p-5 flex items-center justify-center gap-4'>
           <RiFileList3Line className='text-yellow-400 text-7xl' />
           <span>
@@ -58,7 +60,7 @@ export default function App() {
           </span>
         </div>
       </section>
-      <section className='container mx-auto grid grid-cols-[60%_40%] gap-6 place-content-center my-3'>
+      <section className='w-5/6 mx-auto grid grid-cols-1 md:grid-cols-[60%_40%] gap-6 place-content-center my-3'>
         <article className='space-y-2'>
           <h2 className='text-xl font-semibold'>Current Orders</h2>
           <Suspense fallback={<p>Loading...</p>}>
@@ -70,11 +72,11 @@ export default function App() {
           <div className='border-2 p-3 border-gray-300 rounded-2xl space-y-2'>
           {
             cooking.map(e => (
-            <div key={e.id} className='border-1 px-6 py-4 border-gray-300 rounded-2xl space-y-1'>
-              <p className='text-amber-400 text-lg font-semibold'>{e.order_title}</p>
+            <div key={e.id} className='border-1 cooking px-6 py-4 border-gray-300 rounded-2xl space-y-1'>
+              <p className='text-amber-800 text-lg font-semibold'>{e.order_title}</p>
               <p className='text-sm font-semibold text-gray-800'>Quantity : {e.quantity}</p>
-              <p className='text-xs font-medium text-gray-500'>{e.special_instruction}</p>
-              <button onClick={() => handleCooked(e)} className='bg-amber-400 px-4 py-2 rounded-full font-semibold text-sm'>Cooked ?</button>
+              <p className='text-xs font-medium text-gray-800'>{e.special_instruction}</p>
+              <button onClick={() => handleCooked(e)} className='bg-amber-700 cursor-pointer text-white px-4 py-2 rounded-full font-semibold text-sm'>Cooked ?</button>
             </div>
             ))
           }
@@ -83,11 +85,11 @@ export default function App() {
           <div className='border-2 p-3 border-gray-300 rounded-2xl space-y-2'>
             {
               ready.map(e => (
-            <div key={e.id} className='border-1 p-4 space-y-1 border-gray-700 bg-emerald-50 rounded-2xl text-sm font-medium text-gray-800'>
+            <div key={e.id} className='border-1 p-4 space-y-1 border-gray-400 bg-emerald-50 rounded-2xl text-sm font-medium text-gray-800'>
               <p className='text-emerald-700 font-semibold text-base'>{e.order_title}</p>
               <p>Table : {e.table_no}</p>
               <p>Waiter ID : {e.waiterId}</p>
-              <p className='text-gray-600'>Cooking Time : {new Date().toLocaleTimeString()}</p>
+              <p className='text-gray-600'>Cooking Time : {e.time}</p>
             </div>
               ))
             }

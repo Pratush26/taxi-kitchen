@@ -10,7 +10,7 @@ export default function CurrentOrder({ orderList, order, setOrder, handleOrder }
         <div>
             {
                 order.map(e => (
-                    <button onClick={() => handleOrder(e)} key={e.id} className="p-6 text-start rounded-lg shadow-xl/50 shadow-gray-500 space-y-1">
+                    <button onClick={() => handleOrder(e)} key={e.id} className="p-6 w-full text-start rounded-lg shadow-xl/50 shadow-gray-500 space-y-1">
                         <div className="flex w-full items-center justify-between gap-2">
                             <span className="px-3 py-2 rounded-full text-white bg-amber-400 text-xs">#{e.order_no}</span>
                             <span className="rounded-full bg-amber-300 text-white font-bold aspect-square px-3 grid place-content-center py-1 text-sm">{e.table_no}</span>

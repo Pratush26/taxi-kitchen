@@ -7,7 +7,7 @@ export default function Navbar() {
                 <img src={Logo} alt="logo" className="h-10 w-auto" />
                 <p>Taxi <span className="text-amber-500">Kitchen</span></p>
             </div>
-            <div className="flex gap-16">
+            <div className="sm:flex hidden gap-16">
                 <a href="/" className="border-b-amber-300 border-b-3">Orders</a>
                 <a href="/" className="border-b-amber-300 border-b-3">Foods</a>
                 <a href="/" className="border-b-amber-300 border-b-3">Tables</a>
